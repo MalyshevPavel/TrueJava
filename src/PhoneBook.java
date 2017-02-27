@@ -1,10 +1,13 @@
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class PhoneBook {
     Map<String, Set<String>> Phones;
 
-    PhoneBook() {
-        Phones = new HashMap<String, Set<String>>();
+    public PhoneBook() {
+        Phones = new HashMap<>();
     }
 
     public void addPerson(String name, String... Telephone) {
@@ -14,23 +17,32 @@ public class PhoneBook {
         Phones.put(name, tmp);
     }
 
-    public void removePerson (String name) {
+    public void removePerson(String name) {
         Phones.remove(name);
     }
 
-    public void addPhone(String name, String phone) {
+    public void addPhone(String name, String phone) throws NumberFormatException {
+        Pattern p = Pattern.compile("(^[\\+\\-\\*\\#0-9]+$)");
+        Matcher m = p.matcher(phone);
+        if (!m.find()) throw new NumberFormatException();
         Phones.get(name).add(phone);
     }
 
     public void removePhone(String name, String phone) {
-        Phones.get(name).remove(phone);
+        if (phone.isEmpty()) System.out.println("Телефонов нет");
+        else
+            try {
+                Phones.get(name).remove(phone);
+            } catch (NullPointerException e) {
+                System.out.println("Не существует");
+            }
     }
 
-    public Set<String> searchByPerson (String name) {
+    public Set<String> searchByPerson(String name) {
         return Phones.get(name);
     }
 
-    public String searchByPhone (String phone) {
+    public String searchByPhone(String phone) {
         for (Map.Entry<String, Set<String>> entry : Phones.entrySet()) {
             Set<String> setOfPhones = entry.getValue();
             if (setOfPhones.contains(phone)) return entry.getKey();
