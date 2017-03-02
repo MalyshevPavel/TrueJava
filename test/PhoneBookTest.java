@@ -9,8 +9,9 @@ import static org.junit.Assert.*;
 
 public class PhoneBookTest {
     private PhoneBook phoneBook = new PhoneBook();
+
     @Before
-    public void setPhoneBook(){
+    public void setPhoneBook() {
         phoneBook.addPerson("Vlad", "+79214683546", "+79114783512");
         phoneBook.addPerson("Veronika", "+79212285654");
         phoneBook.addPerson("Pavel", "+79992176286", "+79211889604", "89313456754");

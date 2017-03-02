@@ -18,7 +18,14 @@ public class PhoneBook {
     }
 
     public void removePerson(String name) {
-        Phones.remove(name);
+        if (!(Phones.containsKey(name))) throw new ExceptionInInitializerError("Нет такого человека");
+        try {
+            Phones.remove(name);
+        } catch (NullPointerException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+
+
     }
 
     public void addPhone(String name, String phone) throws NumberFormatException {
@@ -29,17 +36,18 @@ public class PhoneBook {
     }
 
     public void removePhone(String name, String phone) {
-        if (phone.isEmpty()) System.out.println("Телефонов нет");
+        if (phone.isEmpty()) throw new ExceptionInInitializerError("Телефонов нет");
         else
             try {
                 Phones.get(name).remove(phone);
             } catch (NullPointerException e) {
-                System.out.println("Не существует");
+                System.out.println("Не существует такого телефона");
             }
     }
 
     public Set<String> searchByPerson(String name) {
-        return Phones.get(name);
+        if (!(Phones.containsKey(name))) throw new ExceptionInInitializerError("Нет такого человека");
+        else return Phones.get(name);
     }
 
     public String searchByPhone(String phone) {
@@ -49,5 +57,4 @@ public class PhoneBook {
         }
         return null;
     }
-
 }
