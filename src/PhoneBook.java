@@ -18,35 +18,35 @@ public class PhoneBook {
     }
 
     public void removePerson(String name) {
-        if (!(Phones.containsKey(name))) throw new ExceptionInInitializerError("Нет такого человека");
-        try {
-            Phones.remove(name);
-        } catch (NullPointerException e) {
-            throw new ExceptionInInitializerError(e);
-        }
-
-
+        if (!(Phones.containsKey(name))) throw new NullPointerException("Нет такого человека");
+        Phones.remove(name);
     }
 
     public void addPhone(String name, String phone) throws NumberFormatException {
         Pattern p = Pattern.compile("(^[\\+\\-\\*\\#0-9]+$)");
         Matcher m = p.matcher(phone);
         if (!m.find()) throw new NumberFormatException();
+        if (!(Phones.containsKey(name))) throw new NullPointerException("Нет такого человека");
         Phones.get(name).add(phone);
     }
 
     public void removePhone(String name, String phone) {
-        if (phone.isEmpty()) throw new ExceptionInInitializerError("Телефонов нет");
-        else
-            try {
-                Phones.get(name).remove(phone);
-            } catch (NullPointerException e) {
-                System.out.println("Не существует такого телефона");
+        if (phone.isEmpty()) throw new NullPointerException("Телефонов нет");
+        int flag = 0;
+        for (Map.Entry<String, Set<String>> entry : Phones.entrySet()) {
+            Set<String> setOfPhones = entry.getValue();
+            if (setOfPhones.contains(phone)) {
+                flag = 1;
+                break;
             }
+        }
+        if (flag == 0) throw new NullPointerException("Нет такого телефона");
+        if (!(Phones.containsKey(name))) throw new NullPointerException("Нет такого человека");
+        Phones.get(name).remove(phone);
     }
 
     public Set<String> searchByPerson(String name) {
-        if (!(Phones.containsKey(name))) throw new ExceptionInInitializerError("Нет такого человека");
+        if (!(Phones.containsKey(name))) throw new NullPointerException("Нет такого человека");
         else return Phones.get(name);
     }
 
