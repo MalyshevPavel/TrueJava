@@ -31,7 +31,7 @@ public class PhoneBookTest {
     @Test
     public void removePerson() throws Exception {
         phoneBook.removePerson("Vlad");
-        assertFalse(phoneBook.Phones.containsKey("Vlad"));
+        assertTrue(!(phoneBook.Phones.containsKey("Vlad")));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class PhoneBookTest {
         phoneBook.removePhone("Vlad", "+79114783512");
 
         Set<String> setOfPhones = phoneBook.Phones.get("Vlad");
-        assertFalse(setOfPhones.contains("+79114783512"));
+        assertTrue(!(setOfPhones.contains("+79114783512")));
     }
 
     @Test

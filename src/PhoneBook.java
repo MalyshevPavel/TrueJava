@@ -18,7 +18,7 @@ public class PhoneBook {
     }
 
     public void removePerson(String name) {
-        if (!(Phones.containsKey(name))) throw new NullPointerException("Нет такого человека");
+        if (!(Phones.containsKey(name))) throw new IllegalArgumentException("Нет такого человека");
         Phones.remove(name);
     }
 
@@ -26,7 +26,7 @@ public class PhoneBook {
         Pattern p = Pattern.compile("(^[\\+\\-\\*\\#0-9]+$)");
         Matcher m = p.matcher(phone);
         if (!m.find()) throw new NumberFormatException();
-        if (!(Phones.containsKey(name))) throw new NullPointerException("Нет такого человека");
+        if (!(Phones.containsKey(name))) throw new IllegalArgumentException("Нет такого человека");
         Phones.get(name).add(phone);
     }
 
@@ -40,13 +40,14 @@ public class PhoneBook {
                 break;
             }
         }
-        if (flag == 0) throw new NullPointerException("Нет такого телефона");
-        if (!(Phones.containsKey(name))) throw new NullPointerException("Нет такого человека");
+        if (flag == 0) throw new IllegalArgumentException("Нет такого телефона");
+        if (!(Phones.containsKey(name))) throw new IllegalArgumentException("Нет такого человека");
         Phones.get(name).remove(phone);
+
     }
 
     public Set<String> searchByPerson(String name) {
-        if (!(Phones.containsKey(name))) throw new NullPointerException("Нет такого человека");
+        if (!(Phones.containsKey(name))) throw new IllegalArgumentException("Нет такого человека");
         else return Phones.get(name);
     }
 
